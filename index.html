@@ -206,7 +206,6 @@
   </div>
 </section>
 
-<!-- ═══ NUMBERS ═══ -->
 <section id="numbers" class="reveal">
   <p class="eyebrow">
     <span data-lang="en">Our Numbers</span>
@@ -468,12 +467,20 @@ function setLang(lang) {
 }
 
 function sendMessage() {
-  const name = document.getElementById("contactName").value;
-  const email = document.getElementById("contactEmail").value;
-  const message = document.getElementById("contactMessage").value;
+  const name = document.getElementById("contactName").value.trim();
+  const email = document.getElementById("contactEmail").value.trim();
+  const message = document.getElementById("contactMessage").value.trim();
 
   if (!name || !email || !message) {
     alert("Please fill in all fields.");
+    return;
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    document.getElementById("contactEmail").focus();
     return;
   }
 
@@ -489,7 +496,7 @@ function sendMessage() {
     "mailto:sbc@isimg.tn?subject=" + subject + "&body=" + body;
 }
 
-// Scroll reveal
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
