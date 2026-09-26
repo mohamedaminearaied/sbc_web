@@ -89,7 +89,6 @@
 
 <div class="hr-section"><span class="hr-label">—</span></div>
 
-<!-- ═══ ABOUT ═══ -->
 <section id="about" class="reveal">
   <div class="about-visual">
     <img src="logo_club.png" alt="Skill Bridge Community" class="about-image">
@@ -134,7 +133,6 @@
 
 <div class="hr-section"><span class="hr-label">—</span></div>
 
-<!-- ═══ GOALS ═══ -->
 <section id="goals" class="reveal">
   <p class="eyebrow">
     <span data-lang="en">Our Goals</span>
@@ -231,7 +229,7 @@
       </div>
     </div>
     <div class="num-item">
-      <span class="num-value">3<!--<span class="num-unit">+</span>--></span>
+      <span class="num-value">3</span>
       <div class="num-label">
         <span data-lang="en">Expert speakers hosted</span>
         <span data-lang="fr">Experts invités</span>
@@ -239,7 +237,7 @@
       </div>
     </div>
     <div class="num-item">
-      <span class="num-value">2<!--<span class="num-unit">+</span>--></span>
+      <span class="num-value">2</span>
       <div class="num-label">
         <span data-lang="en">Workshops & events organized</span>
         <span data-lang="fr">Ateliers et événements organisés</span>
@@ -247,7 +245,7 @@
       </div>
     </div>
     <div class="num-item">
-      <span class="num-value">4<!--<span class="num-unit">+</span>--></span>
+      <span class="num-value">4</span>
       <div class="num-label">
         <span data-lang="en">Industry domains covered</span>
         <span data-lang="fr">Domaines industriels couverts</span>
@@ -257,7 +255,6 @@
   </div>
 </section>
 
-<!-- ═══ PARTNERS ═══ -->
 <section id="partners" class="reveal">
   <div class="partners-intro">
     <div>
@@ -288,7 +285,6 @@
   </div>
 
   <div class="partners-grid">
-    <!-- Open slots — replace with real partner logos/names -->
     <div class="partner-slot open">
       <div class="p-icon">＋</div>
       <div class="p-open">
@@ -340,7 +336,6 @@
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══ -->
 <section id="contact" class="reveal">
   <div>
     <p class="eyebrow">
@@ -420,33 +415,36 @@
     </div>
   </div>
 
-  <!-- <div class="contact-box">
-    <div class="contact-field">
-      <label>
-        <span data-lang="en">Your Name</span>
-        <span data-lang="fr">Votre Nom</span>
-        <span data-lang="ar">اسمك</span>
-      </label>
-      <input type="text" placeholder="—"/>
-    </div>
-    <div class="contact-field">
-      <label>Email</label>
-      <input type="email" placeholder="—"/>
-    </div>
-    <div class="contact-field">
-      <label>
-        <span data-lang="en">Message</span>
-        <span data-lang="fr">Message</span>
-        <span data-lang="ar">رسالتك</span>
-      </label>
-      <textarea placeholder="—"></textarea>
-    </div>
-    <button class="btn btn-solid" style="width:100%; margin-top:8px;">
-      <span data-lang="en">Send Message</span>
-      <span data-lang="fr">Envoyer</span>
-      <span data-lang="ar">إرسال</span>
-    </button>
-  </div> -->
+  <div class="contact-box">
+  <div class="contact-field">
+    <label>
+      <span data-lang="en">Your Name</span>
+      <span data-lang="fr">Votre Nom</span>
+      <span data-lang="ar">اسمك</span>
+    </label>
+    <input type="text" id="contactName" placeholder="—" required>
+  </div>
+
+  <div class="contact-field">
+    <label>Email</label>
+    <input type="email" id="contactEmail" placeholder="—" required>
+  </div>
+
+  <div class="contact-field">
+    <label>
+      <span data-lang="en">Message</span>
+      <span data-lang="fr">Message</span>
+      <span data-lang="ar">رسالتك</span>
+    </label>
+    <textarea id="contactMessage" placeholder="—" required></textarea>
+  </div>
+
+  <button class="btn btn-solid" type="button" onclick="sendMessage()" style="width:100%; margin-top:8px;">
+    <span data-lang="en">Send Message</span>
+    <span data-lang="fr">Envoyer</span>
+    <span data-lang="ar">إرسال</span>
+  </button>
+</div>
 </section>
 
 <!-- ═══ FOOTER ═══ -->
@@ -464,14 +462,40 @@ function setLang(lang) {
   document.body.className = 'lang-' + lang;
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
 }
 
+function sendMessage() {
+  const name = document.getElementById("contactName").value;
+  const email = document.getElementById("contactEmail").value;
+  const message = document.getElementById("contactMessage").value;
+
+  if (!name || !email || !message) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const subject = encodeURIComponent("Message from Skill Bridge Community website");
+
+  const body = encodeURIComponent(
+    "Name: " + name +
+    "\nEmail: " + email +
+    "\n\nMessage:\n" + message
+  );
+
+  window.location.href =
+    "mailto:sbc@isimg.tn?subject=" + subject + "&body=" + body;
+}
+
 // Scroll reveal
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
 }, { threshold: 0.12 });
+
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
